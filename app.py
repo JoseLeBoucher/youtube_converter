@@ -67,7 +67,6 @@ def handle_download(url: str, title: str, format_type: str, quality_setting: str
         output_template = os.path.join(temp_dir, f"{safe_title}.%(ext)s")
 
         progress_state = {'step': 1, 'total_steps': 1}
-        format_string = ""
 
         if format_type == 'mp3':
             format_string = 'bestaudio/best'
@@ -88,7 +87,6 @@ def handle_download(url: str, title: str, format_type: str, quality_setting: str
             'progress_hooks': [lambda d: progress_hook(d, st.session_state.status_box, progress_state)],
         }
 
-        actual_filepath = None
         try:
             with st.status("Starting...", expanded=True) as status:
                 st.session_state.status_box = status
@@ -132,6 +130,7 @@ def main():
             st.session_state[key] = None if key != 'available_qualities' else []
 
     st.title("🚀 Open Source YouTube Downloader")
+    st.caption("Sick of sketchy download sites loaded with ads? This is your clean, safe, and open-source alternative!")
 
     with st.container(border=True):
         url = st.text_input("🔗 Enter the YouTube URL", placeholder="https://www.youtube.com/watch?v=...")
@@ -171,7 +170,6 @@ def main():
                 format_type = 'mp3' if 'MP3' in format_choice else 'mp4'
 
                 st.write("**2. Choose quality**")
-                quality_setting = None
 
                 if format_type == 'mp3':
                     mp3_bitrate = st.selectbox(
